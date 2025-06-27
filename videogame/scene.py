@@ -352,7 +352,7 @@ class GameScene(Scene):
             if getattr(enemy, "state", "") == "formation":
                 self.score += 50
             elif getattr(enemy, "state", "") == "diving":
-                self.score += 150  # or random.randint(100, 200) for variety
+                self.score += 100  # or random.randint(100, 200) for variety
             EnemyPath.hit_sound.play()
             if self.score >= self.extra_life:
                 self.lives += 1
@@ -460,14 +460,31 @@ class GameScene(Scene):
                 self.enemy_spawner.enemy_group.draw(self._screen)
             self.lives_group.draw(self._screen)
 
-        # draw score and level
-        font = pygame.font.SysFont("pub.ttf", 36)
-        score_surface = font.render(f"Score: {self.score}",
+        # draw score
+        font = pygame.font.SysFont("assets/fonts/pub.ttf", 75)
+        
+        score_surface = font.render(f"HIGH",
                                     True, rgbcolors.orange)
+        
+        score2_surface = font.render(f"SCORE",
+                                    True, rgbcolors.orange)
+        
+        score3_surface = font.render(f"{self.score}",
+                                     True, rgbcolors.white)
+        
+        self._screen.blit(score_surface, (850, 150))
+
+        self._screen.blit(score2_surface, (900, 200))
+        
+        self._screen.blit(score3_surface, (900, 250))
+
+        # draw level
+        font = pygame.font.SysFont("pub.ttf", 50)
+
         level_surface = font.render(f"Level: {self.level}",
                                     True, rgbcolors.white)
-        self._screen.blit(score_surface, (20, 20))
-        self._screen.blit(level_surface, (20, 60))
+        
+        self._screen.blit(level_surface, (20, 20))
 
         # handle game over
         if self.game_over:
